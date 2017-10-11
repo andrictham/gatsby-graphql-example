@@ -1,4 +1,5 @@
-import React from "react"
+import React from 'react'
+import Link from 'gatsby-link'
 import g from 'glamorous'
 import Pluralize from 'react-pluralize'
 
@@ -14,16 +15,18 @@ export default ({ data }) =>
     </g.H4>
     {data.allMarkdownRemark.edges.map( ({ node }) =>
       <g.Div key={node.id} marginBottom={rhythm(1)} borderBottom={"1px solid #DDDDDD"}>
-        <g.H3>
-          {node.frontmatter.title}{" "}
-          <g.Span color="#999999">– {node.frontmatter.date}</g.Span>
-        </g.H3>
-        <g.P>
-          {node.excerpt} <br/>
-        </g.P>
-        <g.P color="#999999">
-          {node.timeToRead} minute read
-        </g.P>
+        <Link to={node.fields.slug} css={{ textDecoration: `none`, color: `inherit`}}>
+          <g.H3>
+            {node.frontmatter.title}{" "}
+            <g.Span color="#999999">– {node.frontmatter.date}</g.Span>
+          </g.H3>
+          <g.P>
+            {node.excerpt} <br/>
+          </g.P>
+          <g.P color="#999999">
+            {node.timeToRead} minute read
+          </g.P>
+        </Link>
       </g.Div>
     )}
   </div>
@@ -44,6 +47,9 @@ export const query = graphql`
           }
           excerpt
           timeToRead
+          fields {
+            slug
+          }
         }
       }
     }
